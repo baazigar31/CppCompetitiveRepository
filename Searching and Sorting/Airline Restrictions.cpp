@@ -1,4 +1,4 @@
-// Problem Link - https://www.codechef.com/UASS001/problems/PSORT3
+// Problem Link - https://www.codechef.com/SEPT21C/problems/AIRLINE
 /* By Shubham Anand */
 #include<bits/stdc++.h>
 //#include<ext/pb_ds/assoc_container.hpp>
@@ -54,39 +54,33 @@ void file_i_o()
 	#endif
 }
 
-
-bool cmp(ll a, ll b){
-	
-}
-
-
 int main(int argc, char const *argv[]) {
 	clock_t begin = clock();
 	file_i_o();
 	// Write your code here....
-	int n;
-	cin>>n;
-	vector<ll> a(n,0);
-	vector<ll> b(n,0);
-	loop(i,0,n-1){
-		cin>>a[i];
+	int t;
+	cin>>t;
+	while(t--){
+		int arr[3]={0};
+		int d,e;
+		cin>>arr[0]>>arr[1]>>arr[2]>>d>>e;
+		int mini=INT_MAX;
+		int ind=-1;
+		// int sum=arr[0]+arr[1]+arr[2];
+		loop(i,0,2){
+			if(arr[i]<e){
+				mini=arr[i];
+				ind=i;
+				// sum-=arr[i];
+				break;
+			}
+		}
+		if(mini>e){
+			cout<<"NO"<<endl;
+		}else{
+
+		}
 	}
-
-	loop(i,0,n-1){
-		cin>>b[i];
-	}
-
-	vector<ll> arr(n,0);
-	int k=0;
-	loop(i,0,n-1){
-		arr[k++];
-	}
-
-	sort(arr.begin(),arr.end(),cmp);
-
-
-
-
 
 
 	#ifndef ONLINE_JUDGE 

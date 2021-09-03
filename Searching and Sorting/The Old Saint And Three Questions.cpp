@@ -1,4 +1,4 @@
-// Problem Link - https://www.codechef.com/UASS001/problems/PSORT3
+// Problem Link - 
 /* By Shubham Anand */
 #include<bits/stdc++.h>
 //#include<ext/pb_ds/assoc_container.hpp>
@@ -54,36 +54,37 @@ void file_i_o()
 	#endif
 }
 
-
-bool cmp(ll a, ll b){
-	
-}
-
-
 int main(int argc, char const *argv[]) {
 	clock_t begin = clock();
 	file_i_o();
 	// Write your code here....
-	int n;
-	cin>>n;
-	vector<ll> a(n,0);
-	vector<ll> b(n,0);
-	loop(i,0,n-1){
-		cin>>a[i];
+	int t;
+	cin>>t;
+	while(t--){
+		int arr[3]={0};
+		vector<int> res(3,0);
+		int one=0;
+		int one1=0;
+		loop(i,0,2){
+			cin>>arr[i];
+			if(arr[i]){
+				one++;
+			}
+		}
+		loop(i,0,2){
+			cin>>res[i];
+
+			if(res[i]){
+				one1++;
+			}
+		}
+		if(one1==one){
+			cout<<"Pass"<<endl;
+		}else{
+			cout<<"Fail"<<endl;
+		}
+
 	}
-
-	loop(i,0,n-1){
-		cin>>b[i];
-	}
-
-	vector<ll> arr(n,0);
-	int k=0;
-	loop(i,0,n-1){
-		arr[k++];
-	}
-
-	sort(arr.begin(),arr.end(),cmp);
-
 
 
 

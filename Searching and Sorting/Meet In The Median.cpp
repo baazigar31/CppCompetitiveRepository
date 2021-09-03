@@ -1,4 +1,4 @@
-// Problem Link - https://www.codechef.com/UASS001/problems/PSORT3
+// Problem Link - 
 /* By Shubham Anand */
 #include<bits/stdc++.h>
 //#include<ext/pb_ds/assoc_container.hpp>
@@ -54,36 +54,101 @@ void file_i_o()
 	#endif
 }
 
+bool check(ll x,ll n,ll k, vector<ll> &arr,vector<ll> &out){
+    int q=0;
+	if(k&1){
+		ll element=(k-1)/2;
+		ll cnt1=0,cnt2=0;
+		ll chota=0;
+		ll bada=0;
+		loop(i,0,n-1){
+			if(arr[i]==x){
+				out[q++]=arr[i];
+				continue;
+			}
+			if(arr[i]<x and chota<element){
+				cnt1++;
+				out[q++]=arr[i];
+				chota++;
+				
+			}else{
+				if(arr[i]>x and bada<element){
+					cnt2++;
+					out[q++]=arr[i];
+					bada++;
+					
+				}
+				
+			}
+		}
+		if(cnt1>=element and cnt2>=element){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	else{
+		ll elementr=k/2;
+		ll cntl=0,cntr=0;
+		ll chota=0;
+		ll bada=0;
+		loop(i,0,n-1){
+			if(arr[i]==x){
+				out[q++]=arr[i];
+				continue;
+			}
+			if(arr[i]<x and chota<elementr){
+				cntl++;
+				out[q++]=arr[i];
+				chota++;
+			}else{
+				if(arr[i]>x and bada<elementr){
+					cntr++;
+					out[q++]=arr[i];
+					bada++;
+				}
+				
+			}
 
-bool cmp(ll a, ll b){
-	
+		}
+		if(cntr>=elementr and cntl>=cntr-1){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
-
 
 int main(int argc, char const *argv[]) {
 	clock_t begin = clock();
 	file_i_o();
 	// Write your code here....
-	int n;
-	cin>>n;
-	vector<ll> a(n,0);
-	vector<ll> b(n,0);
-	loop(i,0,n-1){
-		cin>>a[i];
+	int t;
+	cin>>t;
+	while(t--){
+		int n,k;
+		cin>>n>>k;
+        vector<ll> out(n,0);
+		ll ans=0;
+		vector<ll> arr(n,0);
+		loop(i,0,n-1){
+			cin>>arr[i];
+		}
+
+		ll low=1,high=*max_element(arr.begin(),arr.end());
+		while(high>=low){
+			ll mid=low+(high-low)/2;
+			if(check(mid,n,k,arr,out)){
+				ans=mid;
+				low=mid+1;
+			}else{
+				high=mid-1;
+			}
+		}
+		cout<<ans<<endl;
+		logarr(out,0,k-1);
+		cout<<endl;
 	}
-
-	loop(i,0,n-1){
-		cin>>b[i];
-	}
-
-	vector<ll> arr(n,0);
-	int k=0;
-	loop(i,0,n-1){
-		arr[k++];
-	}
-
-	sort(arr.begin(),arr.end(),cmp);
-
 
 
 

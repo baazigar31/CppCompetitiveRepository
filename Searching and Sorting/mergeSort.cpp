@@ -1,4 +1,4 @@
-// Problem Link - https://www.codechef.com/UASS001/problems/PSORT3
+// Problem Link - 
 /* By Shubham Anand */
 #include<bits/stdc++.h>
 //#include<ext/pb_ds/assoc_container.hpp>
@@ -53,12 +53,42 @@ void file_i_o()
 	    freopen("output.txt", "w", stdout);
 	#endif
 }
+int ctr=0;
 
+void merge(vector<int> &arr,int si,int en,int si2,int en2){
+	vector<int> temp(en2-si+1,0);
+	int k=0;
+	int l=si;
+	while(si<=en and si2<=en2){
+		if(arr[si]<=arr[si2]){
+			temp[k++]=arr[si++];
+		}else{
+			temp[k++]=arr[si2++];
+			ctr+=en-si+1;
+		}
+	}
+	while(si<=en){
+		temp[k++]=arr[si++];
+	}
+	while(si2<=en2){
+		temp[k++]=arr[si2++];
+	}
 
-bool cmp(ll a, ll b){
-	
+	for(int i=0;i<k;i++){
+		arr[l++]=temp[i];
+	}
 }
 
+
+void mergeSort(vector<int> &arr,int si,int en){
+	if(si>=en){
+		return ;
+	}
+	int mid=(si+en)/2;
+	mergeSort(arr,si,mid);
+	mergeSort(arr,mid+1,en);
+	merge(arr,si,mid,mid+1,en);
+}
 
 int main(int argc, char const *argv[]) {
 	clock_t begin = clock();
@@ -66,23 +96,15 @@ int main(int argc, char const *argv[]) {
 	// Write your code here....
 	int n;
 	cin>>n;
-	vector<ll> a(n,0);
-	vector<ll> b(n,0);
+	vector<int> arr(n,0);
 	loop(i,0,n-1){
-		cin>>a[i];
+		cin>>arr[i];
 	}
+	logarr(arr,0,n-1);
+	mergeSort(arr,0,n-1);
+	logarr(arr,0,n-1);
+	cout<<"Inversion count is "<<ctr<<endl;
 
-	loop(i,0,n-1){
-		cin>>b[i];
-	}
-
-	vector<ll> arr(n,0);
-	int k=0;
-	loop(i,0,n-1){
-		arr[k++];
-	}
-
-	sort(arr.begin(),arr.end(),cmp);
 
 
 

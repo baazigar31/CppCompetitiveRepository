@@ -1,80 +1,134 @@
-// Problem Link - 
-/* By Shubham Anand */
-#include<bits/stdc++.h>
-//#include<ext/pb_ds/assoc_container.hpp>
-//#include<ext/pb_ds/tree_policy.hpp>
-//#include <ext/pb_ds/trie_policy.hpp>
-//using namespace __gnu_pbds;
+#include <bits/stdc++.h>
+
 using namespace std;
-#define ll 				long long int
-#define ld				long double
-#define mod             1000000007
-#define inf             1e18
-#define endl			"\n"
-#define pb 				push_back
-#define vi              vector<ll>
-#define vs				vector<string>
-#define pii             pair<ll,ll>
-#define ump				unordered_map
-#define mp 				make_pair
-#define pq_max          priority_queue<ll>
-#define pq_min          priority_queue<ll,vi,greater<ll> >
-#define all(n) 			n.begin(),n.end()
-#define ff 				first
-#define ss 				second
-#define mid(l,r)        (l+(r-l)/2)
-#define bitc(n) 		__builtin_popcount(n)
-#define loop(i,a,b) 	for(int i=(a);i<=(b);i++)
-#define looprev(i,a,b) 	for(int i=(a);i>=(b);i--)
-#define iter(container, it) for(__typeof(container.begin()) it = container.begin(); it != container.end(); it++)
-#define log(args...) 	{ string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
-#define logarr(arr,a,b)	for(int z=(a);z<=(b);z++) cout<<(arr[z])<<" ";cout<<endl;	
-template <typename T> T gcd(T a, T b){if(a%b) return gcd(b,a%b);return b;}
-template <typename T> T lcm(T a, T b){return (a*(b/gcd(a,b)));}
-vs tokenizer(string str,char ch) {std::istringstream var((str)); vs v; string t; while(getline((var), t, (ch))) {v.pb(t);} return v;}
 
+string ltrim(const string &);
+string rtrim(const string &);
+vector<string> split(const string &);
 
-void err(istream_iterator<string> it) {}
-template<typename T, typename... Args>
-void err(istream_iterator<string> it, T a, Args... args) {
-	cout << *it << " = " << a << endl;
-	err(++it, args...);
+/*
+ * Complete the 'countInversions' function below.
+ *
+ * The function is expected to return a LONG_INTEGER.
+ * The function accepts INTEGER_ARRAY arr as parameter.
+ */
+ long ans=0;
+ void merge(vector<int> &arr,int si, int en, int si2, int en2){
+     vector<int> temp(en2-si+1,0);
+     int l=si;
+     int k=0;
+     while(si<=en and si2<=en2){
+         if(arr[si]<=arr[si2]){
+             temp[k++]=arr[si++];
+         }else{
+             temp[k++]=arr[si2++];
+             ans+=(en-si+1);
+         }
+     }
+     while(si<=en){
+         temp[k++]=arr[si++];
+     }
+      
+     while(si2<=en2){
+         temp[k++]=arr[si2++];
+     } 
+     for(int i=0;i<k;i++){
+         arr[l++]=temp[i];
+     }
+ }
+ 
+ 
+void mergeSort(vector<int> &arr,int si, int en){
+    if(si>=en){
+        return ;
+    }
+    int mid=(si+en)/2;
+    mergeSort(arr,si,mid);
+    mergeSort(arr, mid+1, en);
+    merge(arr,si,mid,mid+1,en);
 }
-//typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> pbds;
-//typedef trie<string,null_type,trie_string_access_traits<>,pat_trie_tag,trie_prefix_search_node_update> pbtrie;
 
-void file_i_o()
+
+
+long countInversions(vector<int> arr) {
+    int n=arr.size();
+    mergeSort(arr,0,n-1);
+    return ans;
+}
+
+int main()
 {
-    ios_base::sync_with_stdio(0); 
-    cin.tie(0); 
-    cout.tie(0);
-	#ifndef ONLINE_JUDGE
-	    freopen("input.txt", "r", stdin);
-	    freopen("output.txt", "w", stdout);
-	#endif
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string t_temp;
+    getline(cin, t_temp);
+
+    int t = stoi(ltrim(rtrim(t_temp)));
+
+    for (int t_itr = 0; t_itr < t; t_itr++) {
+        string n_temp;
+        getline(cin, n_temp);
+
+        int n = stoi(ltrim(rtrim(n_temp)));
+
+        string arr_temp_temp;
+        getline(cin, arr_temp_temp);
+
+        vector<string> arr_temp = split(rtrim(arr_temp_temp));
+
+        vector<int> arr(n);
+
+        for (int i = 0; i < n; i++) {
+            int arr_item = stoi(arr_temp[i]);
+
+            arr[i] = arr_item;
+        }
+
+        long result = countInversions(arr);
+
+        fout << result << "\n";
+    }
+
+    fout.close();
+
+    return 0;
 }
 
-int main(int argc, char const *argv[]) {
-	clock_t begin = clock();
-	file_i_o();
-	// Write your code here....
+string ltrim(const string &str) {
+    string s(str);
 
-	// vector<int> v{1,2,34,5};
-	// cout<<v.back();
-	// cout<<v.front();
-	// v.pop_back();
-	// v.pop_front();
+    s.erase(
+        s.begin(),
+        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
+    );
 
-	string &s4="Shubham";
-
-
-
-
-
-	#ifndef ONLINE_JUDGE 
-	  clock_t end = clock();
-	  cout<<"\n\nExecuted In: "<<double(end - begin) / CLOCKS_PER_SEC*1000<<" ms";
-	#endif 
-	return 0;
+    return s;
 }
 
+string rtrim(const string &str) {
+    string s(str);
+
+    s.erase(
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
+        s.end()
+    );
+
+    return s;
+}
+
+vector<string> split(const string &str) {
+    vector<string> tokens;
+
+    string::size_type start = 0;
+    string::size_type end = 0;
+
+    while ((end = str.find(" ", start)) != string::npos) {
+        tokens.push_back(str.substr(start, end - start));
+
+        start = end + 1;
+    }
+
+    tokens.push_back(str.substr(start));
+
+    return tokens;
+}

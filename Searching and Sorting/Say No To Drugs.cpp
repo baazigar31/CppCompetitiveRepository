@@ -1,4 +1,4 @@
-// Problem Link - https://www.codechef.com/UASS001/problems/PSORT3
+// Problem Link - 
 /* By Shubham Anand */
 #include<bits/stdc++.h>
 //#include<ext/pb_ds/assoc_container.hpp>
@@ -54,36 +54,54 @@ void file_i_o()
 	#endif
 }
 
-
-bool cmp(ll a, ll b){
-	
-}
-
-
 int main(int argc, char const *argv[]) {
 	clock_t begin = clock();
 	file_i_o();
 	// Write your code here....
-	int n;
-	cin>>n;
-	vector<ll> a(n,0);
-	vector<ll> b(n,0);
-	loop(i,0,n-1){
-		cin>>a[i];
+	int t;
+	cin>>t;
+	while(t--){
+		int n,k,l;
+		cin>>n>>k>>l;
+		vector<int> arr(n,0);
+		loop(i,0,n-1){
+			cin>>arr[i];
+		}
+
+		int maxi=INT_MIN;
+		if(n==1){
+			cout<<"Yes"<<endl;
+
+		}else{
+
+			loop(i,0,n-2){
+				maxi=max(arr[i],maxi);
+			}
+			if(arr[n-1]>maxi){
+				cout<<"Yes"<<endl;
+			}else{
+				if(k<=0){
+					cout<<"No"<<endl;
+				}else{
+					int cnt=0;
+					while(arr[n-1]<=maxi and cnt<l-1){
+						arr[n-1]+=k;
+						cnt++;
+					}
+					if(arr[n-1]>maxi){
+						cout<<"Yes"<<endl;
+					}else{
+						cout<<"No"<<endl;
+					}
+
+				}
+			}
+
+		}
+		
+
+
 	}
-
-	loop(i,0,n-1){
-		cin>>b[i];
-	}
-
-	vector<ll> arr(n,0);
-	int k=0;
-	loop(i,0,n-1){
-		arr[k++];
-	}
-
-	sort(arr.begin(),arr.end(),cmp);
-
 
 
 
